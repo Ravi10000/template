@@ -6,14 +6,13 @@ const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 
 
-// show loading
-function loading(){
+
+function showLoadingSpinner(){
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// Hide loading
-function complete(){
+function removeLoadingSpinner(){
     if(!loader.hidden ){
         quoteContainer.hidden = false;
         loader.hidden = true;
@@ -22,7 +21,7 @@ function complete(){
 
 // Get quote from API
 async function getQuote() {
-    loading();
+    showLoadingSpinner();
     // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     // const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     const apiUrl = 'https://ruravi80-eval-prod.apigee.net/myown';
@@ -46,11 +45,11 @@ async function getQuote() {
         quoteText.classList.remove('long-quote');    
         }
         quoteText.innerText = data.quoteText;
-        //stop loader, show quote
-        complete();
+        removeLoadingSpinner();
     }catch(error){
+        // console.log('whoops, no quote', error);
+        
         getQuote();
-        console.log('whoops, no quote', error);
     }
 }
 
